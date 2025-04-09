@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ã“ã†ã£ã“ã†</title>
+    <style>
+        /* 初期状態の設定 */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: rgb(255, 255, 255);
+            font-family: Arial, sans-serif;
+            transition: background-color 1s ease;
+        }
+
+        h1 {
+            margin-top: 0;   /* 上のマージンをゼロに */
+            margin-bottom: 0; /* 下のマージンをゼロに */
+            width: 100%; /* 親要素の幅いっぱいに広がる */
+            font-size: 24px;
+        }
+
+        p{
+            margin-top: 0;   /* 上のマージンをゼロに */
+            margin-bottom: 0; /* 下のマージンをゼロに */
+            width: 100%; /* 親要素の幅いっぱいに広がる */
+        }
+
+        /* 点滅する文字のアニメーション */
+        #uso {
+            color: white;
+        }
+
+        /* 点滅アニメーション */
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .hidden{
+            display: none;
+        }
+
+        .countdown {
+            font-size: 2rem;
+            margin-top: 20px;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+
+        /* カウントダウンが終了した後の虹色背景 */
+        .rainbow-background {
+            animation: rainbowAnimation 5s infinite linear;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #00ff00, #0000ff, #8a2be2);
+            background-size: 400% 400%;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 虹色のアニメーション */
+        @keyframes rainbowAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* ダウンロード後 */
+        .clear-message {
+            font-size: 2rem;
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* どっきり成功メッセージ */
+        .success-message {
+            font-size: 2.5rem;
+            margin-top: 20px;
+            display: none;
+            color: white;
+        }
+
+        /* ボタンのスタイル */
+        .clear-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background-color: #4c6faf;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .clear-button:hover {
+            background-color: #45a049;
+        }
+
+        #time{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="uso" id="welcomeMessage">お使いのiPhoneが(13)個のウイルスにより深刻なダメージを受けています。</h1>
+    <h1 class="uso" id="yori"></h1>
+    <p class="uso"></p>
+    <p class="uso">お使いのiPhoneのウイルス感染が検出されました。対応策をとらないと、SIMカード、写真、および連絡先が破損します。</p>
+    <p class="uso" id="time">3minutes</p>
+    <P class="uso">ウイルスの除去方法:</P>
+    <p class="uso"></p>
+    <p class="uso">ステップ１:下のボタンをタップしてApp Storeに進み、推奨されているウイルス除去アプリを無料でインストールします。</p>
+    <p class="uso">ステップ２:アプリを実行し、すべてのウイルスを除去します。</p>
+
+    
+    <div class="clear-message" id="clearMessage">
+        <p>うっそぴょ～ん</p>
+        <p>警戒心がなさすぎる！</p>
+        <p>仲間内だからって安全と思ったら大間違いだ！</p>
+        <p>本当のウイルスだったら終わってるぞ！</p>
+    </div>
+
+    
+    <div class="success-message" id="successMessage">どっきり大成功</div>
+
+   
+    <button class="clear-button" id="clearButton">ウイルスを今すぐ除去</button>
+
+    <script>
+        // 変数設定
+        let countdownElement = document.getElementById("countdown");
+        let interval;
+
+        // ダウンロードボタンを押した時の動作
+        document.getElementById("clearButton").addEventListener("click", function() {
+            // クラス名 "uso" を持つすべての要素を取得
+            let elements = document.querySelectorAll('.uso');
+            elements.forEach(function(element) {
+                // クラス "uso" を "Class" と "hidden" に変更
+                element.classList.add('Class', 'hidden'); // "Class" と "hidden" クラスを追加
+            });
+            clearButton.classList.add("hidden");
+            // クリアメッセージを表示
+            document.getElementById("clearMessage").style.display = "block"; // "clearMessage" を表示
+
+            // ランダムな色を背景と文字に設定
+            changeRandomColors();
+        });
+
+        // ランダムな色を設定する関数
+        function changeRandomColors() {
+            // ランダムな背景色を生成
+            let randomBgColor = getRandomColor();
+            document.body.style.backgroundColor = randomBgColor;
+
+            // ランダムな文字色を生成
+            let randomTextColor = getRandomColor();
+            document.body.style.color = randomTextColor;
+        }
+
+        // ランダムな色を生成する関数
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>
